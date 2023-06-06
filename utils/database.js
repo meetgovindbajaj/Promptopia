@@ -9,7 +9,7 @@ export const connectToDB = async () => {
     await mongoose.connect(process.env.MONGODB_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
-      dbName: 'share_prompt',
+      dbName: 'PROMPTOPIA',
     });
     isConnected = true;
   } catch (e) {

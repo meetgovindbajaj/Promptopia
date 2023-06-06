@@ -7,7 +7,21 @@
 /* 
   Note: The styles for this gradient grid background is heavily inspired by the creator of this amazing site (https://dub.sh) – all credits go to them! 
 */
-
+* {
+  scroll-behavior: smooth !important;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  -webkit-font-smoothing: antialiased;
+}
 .main {
   width: 100vw;
   min-height: 100vh;
