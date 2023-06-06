@@ -17,8 +17,8 @@ const handler = NextAuth({
   },
   callbacks: {
     async session({ session }) {
-      const sessionUser = await User.findOne({ email: session?.user.email });
-      session.user.id = sessionUser?._id.toString();
+      const sessionUser = await User.findOne({ email: session.user.email });
+      session.user.id = sessionUser._id.toString();
       session.maxAge = 60 * 60 * 24 * 30;
       return session;
     },
