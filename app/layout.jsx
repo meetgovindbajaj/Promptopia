@@ -5,6 +5,7 @@ export const metadata = {
   title: 'Promptopia',
   description: 'Discover & Share AI Prompts.',
 };
+export const dynamic = 'force-dynamic';
 const RootLayout = ({ children }) => {
   return (
     <html lang='en'>
