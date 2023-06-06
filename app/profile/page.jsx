@@ -13,7 +13,7 @@ const MyProfile = () => {
       const fetchPrompt = async () => {
         const response = await fetch(`/api/users/${session?.user.id}/prompt`);
         const data = await response.json();
-        setPosts((post) => data);
+        setPosts(data);
       };
       fetchPrompt();
     }
