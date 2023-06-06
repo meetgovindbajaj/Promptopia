@@ -1,9 +1,8 @@
 import mongoose from 'mongoose';
 let isConnected = false;
 export const connectToDB = async () => {
-  mongoose.set('strictQuery', true);
+  mongoose.set('strictQuery', false);
   if (isConnected) {
-    console.log('Database already connected!');
     return;
   }
   try {
@@ -13,7 +12,6 @@ export const connectToDB = async () => {
       dbName: 'share_prompt',
     });
     isConnected = true;
-    console.log('Database connected');
   } catch (e) {
     console.log(e);
   }

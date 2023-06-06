@@ -7,12 +7,10 @@ const OtherProfile = ({ params }) => {
   const name = searchParams.get('name');
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    const fetchPrompt = async () => {
-      const response = await fetch(`/api/users/${params.id}/prompt`);
-      const data = await response.json();
-      setPosts((post) => data);
-    };
-    if (params?.id) fetchPrompt();
+    if (params?.id)
+      fetch(`/api/users/${params.id}/prompt`)
+        .then((res) => res.json())
+        .then((data) => setPosts(data));
   }, [params.id]);
 
   return (

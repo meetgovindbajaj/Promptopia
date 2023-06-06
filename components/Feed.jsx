@@ -20,16 +20,13 @@ const Feed = () => {
     setSearchText((searched) => tag);
   };
   useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await fetch('/api/prompt', {
-        headers: {
-          'Cache-Control': 'no-store, max-age=0',
-        },
-      });
-      const data = await response.json();
-      setPosts(data);
-    };
-    fetchPosts();
+    fetch('/api/prompt', {
+      headers: {
+        'Cache-Control': 'no-store, max-age=0',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setPosts(data));
   }, []);
   useEffect(() => {
     if (searchText !== '') {

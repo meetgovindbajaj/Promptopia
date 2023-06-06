@@ -1,23 +1,18 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Profile from '@components/Profile';
 const MyProfile = () => {
   const { data: session } = useSession();
   const router = useRouter();
-  const pathname = usePathname();
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    if (session?.user) {
-      const fetchPrompt = async () => {
-        const response = await fetch(`/api/users/${session?.user.id}/prompt`);
-        const data = await response.json();
-        setPosts(data);
-      };
-      fetchPrompt();
-    }
-  }, [session?.user]);
+    if (session?.user)
+      fetch(`/api/users/${session?.user.id}/prompt`)
+        .then((res) => res.json())
+        .then((data) => setPosts(data));
+  }, [session]);
   const handleEdit = (post) => {
     router.push(`/update-prompt?id=${post._id}`);
   };

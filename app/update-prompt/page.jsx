@@ -12,29 +12,23 @@ const UpdatePrompt = () => {
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({ prompt: '', tag: '' });
   useEffect(() => {
-    const getPromptDetails = async () => {
-      try {
-        const response = await fetch(`/api/prompt/${promptId}`);
-        const data = await response.json();
-        setPost({ ...post, ...data });
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    if (promptId && session?.user.id) getPromptDetails();
+    if (promptId && session?.user.id)
+      fetch(`/api/prompt/${promptId}`)
+        .then((res) => res.json())
+        .then((data) => setPost({ prompt: data.prompt, tag: data.tag }));
     else router.push('/');
   }, [promptId]);
 
   const updatePrompt = async (e) => {
     e.preventDefault();
-    if (!promptId) return Error('Prompt not found!');
+    if (!promptId) return alert('Prompt not found!');
     setSubmitting(true);
     try {
-      const responce = await fetch(`/api/prompt/${promptId}`, {
+      const response = await fetch(`/api/prompt/${promptId}`, {
         method: 'PATCH',
         body: JSON.stringify({ prompt: post.prompt, tag: post.tag }),
       });
-      if (responce.ok) {
+      if (response.ok) {
         router.push('/');
       }
     } catch (e) {
