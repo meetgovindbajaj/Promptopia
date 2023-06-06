@@ -25,7 +25,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
           }}
         >
           <Image
-            src={post?.creator?.image}
+            src={post?.creator?.image ?? '/assets/images/logo.svg'}
             alt={'user_image'}
             width={40}
             height={40}
