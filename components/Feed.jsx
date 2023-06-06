@@ -20,11 +20,12 @@ const Feed = () => {
     setSearchText((searched) => tag);
   };
   useEffect(() => {
-    (async () => {
+    const allPosts = async () => {
       const response = await fetch('/api/prompt');
       const data = await response.json();
-      setPosts(data);
-    })();
+      setPosts((posts) => data);
+    };
+    allPosts();
   }, []);
   useEffect(() => {
     if (searchText !== '') {
