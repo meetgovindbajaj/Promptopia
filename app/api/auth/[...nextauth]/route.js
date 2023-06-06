@@ -8,12 +8,17 @@ const handler = NextAuth({
     GoogleProviders({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    maxAge: 60 * 60 * 24 * 30,
+  },
   callbacks: {
     async session({ session }) {
-      const sessionUser = await User.findOne({ email: session.user.email });
-      session.user.id = sessionUser._id.toString();
+      const sessionUser = await User.findOne({ email: session?.user.email });
+      session.user.id = sessionUser?._id.toString();
       session.maxAge = 60 * 60 * 24 * 30;
       return session;
     },
