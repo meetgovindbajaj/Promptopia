@@ -21,7 +21,11 @@ const Feed = () => {
   };
   useEffect(() => {
     const allPosts = async () => {
-      const response = await fetch('/api/prompt', { next: { revalidate: 60 } });
+      const response = await fetch('/api/prompt', {
+        headers: {
+          'Cache-Control': 'no-store, max-age=0',
+        },
+      });
       const data = await response.json();
       setPosts((posts) => data);
     };
