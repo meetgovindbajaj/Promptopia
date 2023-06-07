@@ -11,26 +11,23 @@ const handler = NextAuth({
       allowDangerousEmailAccountLinking: true,
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
-  session: {
-    maxAge: 60 * 60 * 24 * 30,
-  },
   callbacks: {
     async session({ session }) {
-      const sessionUser = await User.findOne({ email: session.user.email });
-      session.user.id = sessionUser._id.toString();
-      session.maxAge = 60 * 60 * 24 * 30;
+      if (session) {
+        const sessionUser = await User.findOne({ email: session.user.email });
+        session.user.id = sessionUser._id.toString();
+      }
       return session;
     },
-    async signIn({ profile }) {
+    async signIn({ user }) {
       try {
         await connectToDB();
-        const userExists = await User.findOne({ email: profile.email });
+        const userExists = await User.findOne({ email: user.email });
         if (!userExists) {
           await User.create({
-            email: profile.email,
-            username: profile.name.replaceAll(' ', '_'),
-            image: profile.picture,
+            email: user.email,
+            username: user.name,
+            image: user.image,
           });
         }
         return true;
@@ -41,4 +38,4 @@ const handler = NextAuth({
     },
   },
 });
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST, handler as PATCH, handler as DELETE };

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useId } from 'react';
+import { useState, useEffect, useLayoutEffect, useId } from 'react';
 import PromptCard from '@components/PromptCard';
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
@@ -15,16 +15,10 @@ const Feed = () => {
   const [searchText, setSearchText] = useState('');
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
-  const handleSearchChange = (e) => setSearchText((searched) => e.target.value);
-  const handleTagClick = (tag) => {
-    setSearchText((searched) => tag);
-  };
-  useEffect(() => {
-    fetch('/api/prompt', {
-      headers: {
-        'Cache-Control': 'no-store, max-age=0',
-      },
-    })
+  const handleSearchChange = (e) => setSearchText(e.target.value);
+  const handleTagClick = (tag) => setSearchText(tag);
+  useLayoutEffect(() => {
+    fetch('/api/prompt')
       .then((res) => res.json())
       .then((data) => setPosts(data));
   }, []);
