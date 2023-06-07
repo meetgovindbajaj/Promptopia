@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: { serverComponentsExternalPackages: ['mongoose'], isrMemoryCacheSize: 50 },
+  experimental: { serverComponentsExternalPackages: ['mongoose'] },
   images: { domains: ['lh3.googleusercontent.com', 'https://s3.scriptcdn.net'] },
   webpack(config) {
     config.experiments = {
