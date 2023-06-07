@@ -2,10 +2,13 @@
 
 import { useState, useEffect, useLayoutEffect } from 'react';
 import PromptCard from '@components/PromptCard';
+import useSWR from 'swr';
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
     <div className={'mt-16 prompt_layout'}>
-      {data.map((prompt) =>
+      {data?.map((prompt) =>
         prompt ? (
           <PromptCard key={prompt.id} post={prompt} handleTagClick={handleTagClick} />
         ) : (
@@ -21,11 +24,11 @@ const Feed = () => {
   const [filteredPosts, setFilteredPosts] = useState([]);
   const handleSearchChange = (e) => setSearchText(e.target.value);
   const handleTagClick = (tag) => setSearchText(tag);
-  useLayoutEffect(() => {
-    fetch('/api/prompt')
-      .then((res) => res.json())
-      .then((data) => setPosts(data));
-  }, []);
+  const { data, error } = useSWR('/api/prompt', fetcher);
+  useEffect(() => {
+    setPosts(data);
+  }, [data]);
+
   useEffect(() => {
     if (searchText !== '') {
       setFilteredPosts(
@@ -39,6 +42,9 @@ const Feed = () => {
       );
     }
   }, [searchText]);
+
+  if (error) return <div>Failed to load</div>;
+  if (!data) return <div>Loading...</div>;
 
   return (
     <section className={'feed'}>
