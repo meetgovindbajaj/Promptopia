@@ -18,7 +18,7 @@ const Feed = () => {
   const handleSearchChange = (e) => setSearchText(e.target.value);
   const handleTagClick = (tag) => setSearchText(tag);
   useLayoutEffect(() => {
-    fetch('/api/prompt')
+    fetch('/api/prompt', { next: { tags: ['prompts'] } })
       .then((res) => res.json())
       .then((data) => setPosts(data));
   }, []);
