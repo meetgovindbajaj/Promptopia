@@ -11,8 +11,7 @@ export const POST = async (req, res) => {
       tag,
     });
     await newPrompt.save();
-    const posts = req.nextUrl.searchParams.get('prompts');
-    revalidateTag(posts);
+    await revalidateTag('prompts');
     return new Response(JSON.stringify({ ...newPrompt, revalidated: true }), { status: 201 });
   } catch (e) {
     console.log(e);
