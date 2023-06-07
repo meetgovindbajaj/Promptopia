@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import Form from '@components/Form';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -11,7 +11,7 @@ const UpdatePrompt = () => {
   const promptId = searchParams.get('id');
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({ prompt: '', tag: '' });
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (promptId && session?.user.id)
       fetch(`/api/prompt/${promptId}`)
         .then((res) => res.json())
@@ -29,7 +29,7 @@ const UpdatePrompt = () => {
         body: JSON.stringify({ prompt: post.prompt, tag: post.tag }),
       });
       if (response.ok) {
-        router.push('/');
+        router.push('/profile');
       }
     } catch (e) {
       console.log(e);
