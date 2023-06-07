@@ -1,6 +1,7 @@
 import { connectToDB } from '@utils/database';
 import Prompt from '@models/prompt';
-export const POST = async (req) => {
+import { revalidateTag } from 'next/server';
+export const POST = async (req, res) => {
   const { userId, prompt, tag } = await req.json();
   try {
     await connectToDB();
@@ -10,7 +11,9 @@ export const POST = async (req) => {
       tag,
     });
     await newPrompt.save();
-    return new Response(JSON.stringify(newPrompt), { status: 201 });
+    const posts = req.nextUrl.searchParams.get('prompts');
+    revalidateTag(posts);
+    return new Response(JSON.stringify({ ...newPrompt, revalidated: true }), { status: 201 });
   } catch (e) {
     console.log(e);
     return new Response('Failed to create a new prompt', { status: 500 });

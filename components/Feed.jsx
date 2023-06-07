@@ -1,13 +1,17 @@
 'use client';
 
-import { useState, useEffect, useLayoutEffect, useId } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import PromptCard from '@components/PromptCard';
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
     <div className={'mt-16 prompt_layout'}>
-      {data.map((prompt) => (
-        <PromptCard key={useId() + prompt.id} post={prompt} handleTagClick={handleTagClick} />
-      ))}
+      {data.map((prompt) =>
+        prompt ? (
+          <PromptCard key={prompt.id} post={prompt} handleTagClick={handleTagClick} />
+        ) : (
+          <></>
+        ),
+      )}
     </div>
   );
 };

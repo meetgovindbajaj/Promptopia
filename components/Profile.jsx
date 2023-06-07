@@ -1,5 +1,4 @@
 import PromptCard from '@components/PromptCard';
-import { useId } from 'react';
 const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
   return (
     <section className={'w-full'}>
@@ -8,14 +7,18 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
         <p className={'desc text-left'}>{desc}</p>
       </h1>
       <div className={'mt-10 prompt_layout'}>
-        {data.map((prompt) => (
-          <PromptCard
-            key={useId() + prompt.id}
-            post={prompt}
-            handleEdit={() => handleEdit && handleEdit(prompt)}
-            handleDelete={() => handleDelete && handleDelete(prompt)}
-          />
-        ))}
+        {data.map((prompt) =>
+          prompt ? (
+            <PromptCard
+              key={prompt.id}
+              post={prompt}
+              handleEdit={() => handleEdit && handleEdit(prompt)}
+              handleDelete={() => handleDelete && handleDelete(prompt)}
+            />
+          ) : (
+            <></>
+          ),
+        )}
       </div>
     </section>
   );
