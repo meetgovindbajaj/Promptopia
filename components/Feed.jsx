@@ -22,7 +22,7 @@ const Feed = () => {
   const handleSearchChange = (e) => setSearchText(e.target.value);
   const handleTagClick = (tag) => setSearchText(tag);
   useLayoutEffect(() => {
-    fetch('/api/prompt', { next: { revalidate: 60 } })
+    fetch('/api/prompt')
       .then((res) => res.json())
       .then((data) => setPosts(data));
   }, []);
