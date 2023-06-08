@@ -1,7 +1,6 @@
 import { connectToDB } from '@utils/database';
 import Prompt from '@models/prompt';
-import { revalidatePath } from 'next/cache';
-export const GET = (req) =>
+export const POST = (req) =>
   connectToDB()
     .then(() => Prompt.find({}).populate('creator'))
     .then((prompts) => new Response(JSON.stringify(prompts), { status: 200 }))
