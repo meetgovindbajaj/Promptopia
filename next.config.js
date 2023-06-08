@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: { serverComponentsExternalPackages: ['mongoose'] },
-  images: { domains: ['lh3.googleusercontent.com', 'https://s3.scriptcdn.net'] },
+  experimental: { serverComponentsExternalPackages: ['mongoose'], appDir: true },
+  images: { domains: ['lh3.googleusercontent.com'] },
   webpack(config) {
     config.experiments = {
       ...config.experiments,

@@ -1,14 +1,15 @@
 'use client';
 
-import { useState, useEffect, useId } from 'react';
+import { useState, useEffect } from 'react';
 import PromptCard from '@components/PromptCard';
+import Image from 'next/image';
 
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
     <div className={'mt-16 prompt_layout'}>
       {data?.map((prompt) =>
         prompt ? (
-          <PromptCard key={prompt.id ?? useId()} post={prompt} handleTagClick={handleTagClick} />
+          <PromptCard key={prompt.id} post={prompt} handleTagClick={handleTagClick} />
         ) : (
           <></>
         ),
@@ -20,16 +21,21 @@ const Feed = () => {
   const [searchText, setSearchText] = useState('');
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const handleSearchChange = (e) => setSearchText(e.target.value);
   const handleTagClick = (tag) => setSearchText(tag);
   useEffect(() => {
-    fetch('/api/prompt')
+    fetch('/api/prompt', { cache: 'no-store', next: { revalidate: 10 } })
       .then((r) => r.json())
-      .then((r) => setPosts(r));
+      .then((r) => {
+        setPosts(r);
+        setLoading(false);
+      });
   }, []);
 
   useEffect(() => {
     if (searchText !== '') {
+      setLoading(true);
       setFilteredPosts(
         posts.filter(
           (p) =>
@@ -39,6 +45,7 @@ const Feed = () => {
             p.tag.includes(searchText),
         ),
       );
+      setLoading(false);
     }
   }, [searchText]);
 
@@ -54,7 +61,11 @@ const Feed = () => {
           required={true}
         />
       </form>
-      <PromptCardList data={searchText ? filteredPosts : posts} handleTagClick={handleTagClick} />
+      {loading ? (
+        <Image src={'/assets/icons/loader.svg'} width={50} height={50} className='mt-10' />
+      ) : (
+        <PromptCardList data={searchText ? filteredPosts : posts} handleTagClick={handleTagClick} />
+      )}
     </section>
   );
 };

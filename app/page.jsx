@@ -1,4 +1,4 @@
-import Feed from '@components/Feed';
+import Link from 'next/link';
 const Home = () => {
   return (
     <section className='w-full flex-center flex-col'>
@@ -11,7 +11,9 @@ const Home = () => {
         Promptopia is an open-source AI prompting tool for modern world to discover create and share
         creative prompts.
       </p>
-      <Feed />
+      <Link href={'/prompts'} className='my-4 font-satoshi blue_gradient hover:orange_gradient'>
+        View all prompts →
+      </Link>
     </section>
   );
 };
