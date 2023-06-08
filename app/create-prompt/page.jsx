@@ -21,7 +21,7 @@ const CreatePrompt = () => {
         body: JSON.stringify({ userId: session?.user?.id, prompt: post.prompt, tag: post.tag }),
       });
       if (response.ok) {
-        router.push('/');
+        router.push('/prompts');
       }
     } catch (e) {
       console.log(e);
