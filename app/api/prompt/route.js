@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 export const GET = (req) =>
   connectToDB()
     .then(() => {
-      revalidatePath('/prompt');
+      revalidatePath('/api/prompt');
       return Prompt.find({}).populate('creator');
     })
     .then((prompts) => new Response(JSON.stringify(prompts), { status: 200 }))
