@@ -11,7 +11,7 @@ export const POST = async (req, res) => {
       tag,
     });
     await newPrompt.save();
-    revalidatePath('/api/prompt');
+    revalidatePath('/prompt');
     return new Response(JSON.stringify(newPrompt), { status: 201 });
   } catch (e) {
     console.log(e);
