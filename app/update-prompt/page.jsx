@@ -16,7 +16,9 @@ const UpdatePrompt = () => {
       fetch(`/api/prompt/${promptId}`)
         .then((res) => res.json())
         .then((data) => setPost({ prompt: data.prompt, tag: data.tag }));
-    else router.push('/');
+    fetch(`/api/revalidate?path=/prompt&secret=${process.env.NEXTAUTH_SECRET}`)
+      .then((r) => r.json())
+      .then((r) => console.log(r));
   }, [promptId]);
 
   const updatePrompt = async (e) => {

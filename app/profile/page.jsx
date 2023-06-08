@@ -12,7 +12,6 @@ const MyProfile = () => {
       fetch(`/api/users/${session?.user.id}/prompt`)
         .then((res) => res.json())
         .then((data) => setPosts(data));
-    else router.push('/');
   }, [session]);
   const handleEdit = (post) => {
     router.push(`/update-prompt?id=${post._id}`);
