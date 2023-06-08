@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  if (req.query.secret != process.env.NEXTAUTH_SECRET) {
+  if (req.query.secret != process.env.TOKEN) {
     return res.status(401).json({ message: 'Invalid Token' });
   }
   const path = req.query.path;
