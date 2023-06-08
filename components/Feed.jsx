@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect, useId } from 'react';
 import PromptCard from '@components/PromptCard';
 import useSWR from 'swr';
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -10,7 +10,7 @@ const PromptCardList = ({ data, handleTagClick }) => {
     <div className={'mt-16 prompt_layout'}>
       {data?.map((prompt) =>
         prompt ? (
-          <PromptCard key={prompt.id} post={prompt} handleTagClick={handleTagClick} />
+          <PromptCard key={prompt.id ?? useId()} post={prompt} handleTagClick={handleTagClick} />
         ) : (
           <></>
         ),

@@ -23,8 +23,8 @@ export const dynamic = 'force-dynamic';
 const RootLayout = ({ children }) => {
   return (
     <Provider>
-      <html lang='en'>
-        <body>
+      <html lang='en' suppressHydrationWarning={true}>
+        <body suppressHydrationWarning={true}>
           <div className='main'>
             <div className='gradiant' />
           </div>
