@@ -21,7 +21,7 @@ const CreatePrompt = () => {
         body: JSON.stringify({ userId: session?.user?.id, prompt: post.prompt, tag: post.tag }),
       });
       if (response.ok) {
-        fetch(`/api/revalidate?path=/prompt&secret=${process.env.TOKEN}`)
+        fetch(`/api/revalidate?path=/api/prompt&secret=${process.env.TOKEN}`)
           .then((r) => r.json())
           .then((r) => router.push('/prompts'));
       }
