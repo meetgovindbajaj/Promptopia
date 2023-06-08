@@ -2,8 +2,6 @@
 
 import { useState, useEffect, useId } from 'react';
 import PromptCard from '@components/PromptCard';
-import useSWR from 'swr';
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
@@ -24,10 +22,11 @@ const Feed = () => {
   const [filteredPosts, setFilteredPosts] = useState([]);
   const handleSearchChange = (e) => setSearchText(e.target.value);
   const handleTagClick = (tag) => setSearchText(tag);
-  const { data, error } = useSWR('/api/prompt', fetcher);
   useEffect(() => {
-    setPosts(data);
-  }, [data]);
+    fetch('/api/prompt')
+      .then((r) => r.json())
+      .then((r) => setPosts(r));
+  }, []);
 
   useEffect(() => {
     if (searchText !== '') {
@@ -42,9 +41,6 @@ const Feed = () => {
       );
     }
   }, [searchText]);
-
-  if (error) return <div>Failed to load</div>;
-  if (!data) return <div>Loading...</div>;
 
   return (
     <section className={'feed'}>
