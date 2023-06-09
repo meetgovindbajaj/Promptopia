@@ -16,9 +16,6 @@ const UpdatePrompt = () => {
       fetch(`/api/prompt/${promptId}`)
         .then((res) => res.json())
         .then((data) => setPost({ prompt: data.prompt, tag: data.tag }));
-    fetch(`/api/revalidate?path=/api/prompt&secret=${process.env.TOKEN}`)
-      .then((r) => r.json())
-      .then((r) => console.log(r));
   }, [promptId]);
 
   const updatePrompt = async (e) => {
