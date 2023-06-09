@@ -25,7 +25,7 @@ const Feed = () => {
   const handleSearchChange = (e) => setSearchText(e.target.value);
   const handleTagClick = (tag) => setSearchText(tag);
   useEffect(() => {
-    fetch('/api/prompt/all', { cache: 'no-store', method: 'POST' })
+    fetch('/api/prompt/all', { method: 'POST' })
       .then((r) => r.json())
       .then((r) => {
         setPosts(r);
